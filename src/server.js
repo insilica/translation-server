@@ -61,8 +61,8 @@ app.use(cors);
 app.use(
 	bodyParser({
 		enableTypes: ['text', 'json'],
-		jsonLimit: '5mb',
-		textLimit: '5mb',
+		jsonLimit: '100mb',
+		textLimit: '100mb',
 	})
 );
 app.use(_.post('/web', WebEndpoint.handle.bind(WebEndpoint)));

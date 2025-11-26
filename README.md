@@ -1,3 +1,11 @@
+# Zotero Translation Server a la Insilica
+
+## Modifications
+
+- Increase max body size from 5mb to 100mb
+
+---
+
 # Zotero Translation Server
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/zotero/translation-server/ci.yml?branch=master)](https://github.com/zotero/translation-server/actions)
