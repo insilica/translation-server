@@ -3,6 +3,9 @@
 ## Modifications
 
 - Increase max body size from 5mb to 100mb
+- Pin node version for config library compatibility
+- Update endpoints to accept JSON request bodies
+- Add PORT environment variable mapping for cloud environments
 
 ---
 
