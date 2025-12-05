@@ -51,18 +51,23 @@ var WebEndpoint = module.exports = {
 		var session;
 		if (typeof data == 'object') {
 			let sessionID = data.session;
-			if (!sessionID) {
-				ctx.throw(400, "'session' not provided");
-			}
-			session = sessionsWaitingForSelection[sessionID];
-			if (session) {
-				delete sessionsWaitingForSelection[sessionID];
-				session.ctx = ctx;
-				session.next = next;
-				session.data = data;
-			} else {
+			if (data.url && !sessionID) {
 				let single = !!ctx.request.query.single;
 				session = new WebSession(ctx, next, data.url, { single });
+			} else if (!sessionID) {
+				ctx.throw(400, "'session' or 'url' not provided");
+			} else {
+				// Follow-up request with session
+				session = sessionsWaitingForSelection[sessionID];
+				if (session) {
+					delete sessionsWaitingForSelection[sessionID];
+					session.ctx = ctx;
+					session.next = next;
+					session.data = data;
+				} else {
+					let single = !!ctx.request.query.single;
+					session = new WebSession(ctx, next, data.url, { single });
+				}
 			}
 		}
 		else {

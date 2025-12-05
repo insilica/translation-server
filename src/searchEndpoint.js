@@ -29,14 +29,18 @@ const TextSearch = require('./textSearch');
 
 var SearchEndpoint = module.exports = {
 	handle: async function (ctx, next) {
-		ctx.assert(ctx.is('text'), 415);
-		
+		ctx.assert(ctx.is('text') || ctx.is('json'), 415);
+
 		var data = ctx.request.body;
-		
+
 		if (!data) {
 			ctx.throw(400, "POST data not provided\n");
 		}
-		
+
+		if (typeof data == 'object' && data.identifier) {
+			data = data.identifier;
+		}
+
 		// Look for DOI, ISBN, etc.
 		var identifiers = Zotero.Utilities.extractIdentifiers(data);
 		
