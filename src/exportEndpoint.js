@@ -30,25 +30,21 @@ const Translate = require('./translation/translate');
 var ExportEndpoint = module.exports = {
 	handle: async function (ctx, next) {
 		ctx.assert(ctx.is('json'), 415);
-
+		
 		var items = ctx.request.body;
-
+		
 		if (!items) {
 			ctx.throw(400, "POST data not provided");
 		}
-
-		if (items.items && Array.isArray(items.items)) {
-			items = items.items;
-		}
-
+		
 		var query = ctx.request.query;
-
+		
 		var translatorID;
-
+		
 		if (!query.format || !(translatorID = FORMATS[query.format])) {
 			ctx.throw(400, "Invalid format specified");
 		}
-
+		
 		if (!items.length || !items[0].itemType) {
 			ctx.throw(400, "Input must be an array of items as JSON");
 		}

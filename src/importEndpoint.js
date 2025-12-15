@@ -30,13 +30,7 @@ const Translate = require('./translation/translate');
 module.exports = {
 	handle: async function (ctx, _next) {
 		const translate = new Translate.Import();
-
-		var data = ctx.request.body || '';
-		if (typeof data == 'object' && data.data) {
-			data = data.data;
-		}
-
-		translate.setString(data);
+		translate.setString(ctx.request.body || '');
 
 		const translators = await translate.getTranslators();
 		if (translators.length === 0) {
